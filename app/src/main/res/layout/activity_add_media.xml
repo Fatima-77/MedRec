@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Media"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Title Input -->
+        <EditText
+            android:id="@+id/title_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title" />
+
+        <!-- Type Input -->
+        <EditText
+            android:id="@+id/type_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type (e.g. Book, Anime)" />
+
+        <!-- Year Input -->
+        <EditText
+            android:id="@+id/year_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Year"
+            android:inputType="number" />
+
+        <!-- Status Spinner -->
+        <Spinner
+            android:id="@+id/status_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/save_media_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Media"
+            android:layout_marginTop="24dp"/>
+    </LinearLayout>
+</ScrollView>

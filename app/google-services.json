@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "867875482258",
+    "project_id": "medrec777",
+    "storage_bucket": "medrec777.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867875482258:android:c8ebf8d84a1d5c4b31544b",
+        "android_client_info": {
+          "package_name": "com.example.medrec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD53ZkYnk-ZDVXmSk4jE5bRvgPAnJJ6fMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

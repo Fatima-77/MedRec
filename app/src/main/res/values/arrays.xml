@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="status_filters">
+        <item>All</item>
+        <item>Watching</item>
+        <item>Completed</item>
+        <item>Plan to Watch</item>
+        <item>Dropped</item>
+    </string-array>
+</resources>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MedRec</string>
+
+    <string-array name="status_options">
+        <item>completed</item>
+        <item>watching</item>
+        <item>reading</item>
+        <item>plan_to_watch</item>
+        <item>plan_to_read</item>
+    </string-array>
+
+    <string-array name="media_types">
+        <item>All</item>
+        <item>Anime</item>
+        <item>Manga</item>
+        <item>Book</item>
+        <item>Webnovel</item>
+    </string-array>
+</resources>
+
+
