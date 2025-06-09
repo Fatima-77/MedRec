@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
+    android:gravity="center">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/splash_background">
+    <ImageView
+        android:id="@+id/splashIcon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="120dp"/>
 
+    <TextView
+        android:layout_below="@id/splashIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MediaNest"
+        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"/>
 
-    </RelativeLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_below="@+id/splashIcon"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Where all your media preferences come together."
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

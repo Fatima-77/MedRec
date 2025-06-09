@@ -6,14 +6,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import androidx.appcompat.widget.Toolbar;
+import android.text.InputType;
+import android.widget.ImageView;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -48,6 +47,28 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         signupLink = findViewById(R.id.signup_link);
         resetPasswordLink = findViewById(R.id.reset_password);
+
+        EditText passwordInput = findViewById(R.id.password_input);
+        ImageView toggleVisibility = findViewById(R.id.toggle_password_visibility);
+
+        // Track visibility state
+        final boolean[] isPasswordVisible = {false};
+
+        toggleVisibility.setOnClickListener(v -> {
+            if (isPasswordVisible[0]) {
+                // Hide password
+                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                toggleVisibility.setImageResource(R.drawable.ic_visibility_off);
+            } else {
+                // Show password
+                passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                toggleVisibility.setImageResource(R.drawable.ic_visibility);
+            }
+            // Move cursor to the end after toggling
+            passwordInput.setSelection(passwordInput.getText().length());
+            isPasswordVisible[0] = !isPasswordVisible[0];
+        });
+
 
         // Login Button Click
         loginButton.setOnClickListener(v -> {

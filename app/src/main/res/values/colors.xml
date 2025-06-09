@@ -5,4 +5,5 @@
     <color name="grey_theme">#d9d9d9</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="grey_background">#d9d9d9</color>
 </resources>
