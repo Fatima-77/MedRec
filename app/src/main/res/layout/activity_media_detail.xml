@@ -1,46 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#d9d9d9"
+    android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
         <ImageView
-            android:id="@+id/coverImage"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop" />
+            android:id="@+id/imageCover"
+            android:layout_width="200dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_launcher_background" />
 
-        <TextView android:id="@+id/titleView"
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="#485386"
+            android:layout_marginBottom="8dp" />
 
-        <TextView android:id="@+id/typeView"
+        <TextView
+            android:id="@+id/textType"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Type"
+            android:textSize="18sp"
+            android:textColor="#485386"
+            android:layout_marginBottom="8dp" />
 
-        <TextView android:id="@+id/genreView"
+        <TextView
+            android:id="@+id/textGenres"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Genres"
+            android:textColor="#485386"
+            android:layout_marginBottom="8dp" />
 
-        <TextView android:id="@+id/languageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView android:id="@+id/descriptionView"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
+        <TextView
+            android:id="@+id/textDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description goes here"
+            android:textColor="#000000"
+            android:layout_marginTop="12dp" />
     </LinearLayout>
 </ScrollView>
+
 
 
 
