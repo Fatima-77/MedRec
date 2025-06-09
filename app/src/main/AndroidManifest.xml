@@ -33,6 +33,8 @@
 
         <activity android:name=".BrowseActivity"/>
 
+        <activity android:name=".MediaDetailActivity"/>
+
     </application>
 
 </manifest>
