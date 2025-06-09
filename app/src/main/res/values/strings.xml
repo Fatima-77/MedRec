@@ -2,6 +2,7 @@
     <string name="app_name">MedRec</string>
     <string name="type_format">Type: %1$s</string>
     <string name="genres_format">Genres: %1$s</string>
+    <string name="media_cover">Media cover image</string>
 
     <string-array name="status_options">
         <item>completed</item>
