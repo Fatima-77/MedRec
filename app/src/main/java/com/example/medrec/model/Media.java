@@ -8,24 +8,18 @@ public class Media implements Serializable {
     private String title;
     private String type;
     private String description;
-    private String imageUrl;
-    private String language;
-    private List<String> genres;
+    private String cover;
+    private Double rating;       // Optional: could be null
+    private Integer year;        // Optional: could be null
+    private String authors;      // Optional
+    private String language;     // Optional
+    private List<String> category;  // category is your genre list
 
     public Media() {
-        // Required empty constructor for Firebase
+        // Default constructor required for calls to DataSnapshot.getValue(Media.class)
     }
 
-    public Media(String id, String title, String type, String description,
-                 String imageUrl, String language, List<String> genres) {
-        this.id = id;
-        this.title = title;
-        this.type = type;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.language = language;
-        this.genres = genres;
-    }
+    // Add getters — Firebase uses these when populating the class
 
     public String getId() {
         return id;
@@ -43,16 +37,29 @@ public class Media implements Serializable {
         return description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getCover() {
+        return cover;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public String getAuthors() {
+        return authors;
     }
 
     public String getLanguage() {
         return language;
     }
 
-    public List<String> getGenres() {
-        return genres;
+    public List<String> getCategory() {
+        return category;
     }
 }
+
 

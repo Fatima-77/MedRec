@@ -1,6 +1,7 @@
 package com.example.medrec;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ public class MediaDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_media_detail);
 
         // Get the media object
-        Media media = (Media) getIntent().getSerializableExtra("media");
+        Media media = (Media) getIntent().getSerializableExtra("Media");
 
         // View references
         ImageView imageCover = findViewById(R.id.imageCover);
@@ -30,17 +31,24 @@ public class MediaDetailActivity extends AppCompatActivity {
             // Set views
             titleView.setText(media.getTitle());
             typeView.setText(getString(R.string.type_format, media.getType()));
-            genreView.setText(getString(R.string.genres_format, String.join(", ", media.getGenres())));
+
+            // Join category list to comma-separated string
+            String categories = (media.getCategory() != null)
+                    ? TextUtils.join(", ", media.getCategory())
+                    : "N/A";
+            genreView.setText(getString(R.string.genres_format, categories));
+
             descriptionView.setText(media.getDescription());
 
-            // Load image
+            // Load image from cover field
             Glide.with(this)
-                    .load(media.getImageUrl())
+                    .load(media.getCover())
                     .placeholder(R.drawable.splash_background)
                     .into(imageCover);
         }
     }
 }
+
 
 
 

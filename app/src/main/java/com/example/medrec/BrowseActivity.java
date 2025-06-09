@@ -2,7 +2,7 @@ package com.example.medrec;
 
 import android.os.Bundle;
 import android.util.Log;
-import androidx.annotation.NonNull;                    
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,7 +62,7 @@ public class BrowseActivity extends AppCompatActivity {
         recyclerBooks.setAdapter(bookAdapter);
 
         // --- Firebase ---
-        mediaRef = FirebaseDatabase.getInstance().getReference("media");
+        mediaRef = FirebaseDatabase.getInstance().getReference("Media");
         loadMediaData();
     }
 
