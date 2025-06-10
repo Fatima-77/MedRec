@@ -30,7 +30,7 @@
         android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Where all your media preferences come together."
+        android:text="A place for every hidden favourite."
         android:textColor="#000000"
         android:textSize="14sp"
         android:layout_centerHorizontal="true"/>

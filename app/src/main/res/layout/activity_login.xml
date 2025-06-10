@@ -3,33 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_background"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gradient_dark"
-            android:title="MediaNest"
-            android:titleTextColor="@android:color/white"/>
-
         <!-- Top Banner -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/banner_gradient"
-            android:text="@string/login_title"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp" />
+        <include layout="@layout/toolbar" />
 
         <!-- Login Fields Container -->
         <LinearLayout
@@ -40,6 +23,7 @@
             android:padding="24dp"
             android:gravity="center_horizontal">
 
+            <!-- Email Field -->
             <EditText
                 android:id="@+id/email_input"
                 android:layout_width="match_parent"
@@ -49,6 +33,7 @@
                 android:padding="12dp"
                 android:layout_marginBottom="16dp" />
 
+            <!-- Password Field with Toggle -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +47,7 @@
                     android:inputType="textPassword"
                     android:paddingEnd="48dp"
                     android:imeOptions="actionDone"
-                    android:autofillHints="password"/>
+                    android:autofillHints="password" />
 
                 <ImageView
                     android:id="@+id/toggle_password_visibility"
@@ -76,8 +61,7 @@
                     android:focusable="true" />
             </RelativeLayout>
 
-
-
+            <!-- Login Button -->
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
@@ -86,6 +70,7 @@
                 android:textColor="@android:color/white"
                 android:backgroundTint="@color/purple_theme" />
 
+            <!-- Signup Link -->
             <TextView
                 android:id="@+id/signup_link"
                 android:layout_width="wrap_content"
@@ -94,6 +79,7 @@
                 android:textColor="@color/gradient_dark"
                 android:layout_marginTop="20dp" />
 
+            <!-- Forgot Password Link -->
             <TextView
                 android:id="@+id/reset_password"
                 android:layout_width="wrap_content"
@@ -101,10 +87,9 @@
                 android:text="@string/forgot_password"
                 android:textColor="@color/gradient_dark"
                 android:layout_marginTop="10dp" />
-
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>
+
 
 
