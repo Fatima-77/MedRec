@@ -5,38 +5,44 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medrec.adapter.MediaAdapter;
 import com.example.medrec.model.Media;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BrowseActivity extends AppCompatActivity {
+public class BrowseActivity extends BaseActivity {
 
     private Spinner spinnerType;
     private RecyclerView recyclerMedia;
 
-    private List<Media> mediaList = new ArrayList<>();
+    private final List<Media> mediaList = new ArrayList<>();
     private MediaAdapter mediaAdapter;
     private DatabaseReference mediaRef;
 
-    private String[] mediaTypes = {"Anime", "Manga/Manhwa", "Light Novel", "Book"};
+    private final String[] mediaTypes = {"Anime", "Manga/Manhwa", "Light Novel", "Book"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+        setPageTitle("Browse");
 
+        // Initialize views
         spinnerType = findViewById(R.id.spinnerType);
         recyclerMedia = findViewById(R.id.recyclerMedia);
 
-        // Grid layout: 2 columns (auto scales better)
+        // Set up RecyclerView
         recyclerMedia.setLayoutManager(new GridLayoutManager(this, 2));
         mediaAdapter = new MediaAdapter(this, mediaList);
         recyclerMedia.setAdapter(mediaAdapter);
@@ -44,7 +50,7 @@ public class BrowseActivity extends AppCompatActivity {
         // Firebase reference
         mediaRef = FirebaseDatabase.getInstance().getReference("Media");
 
-        // Spinner setup
+        // Set up spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mediaTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapter);
@@ -83,11 +89,13 @@ public class BrowseActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // handle error
+                // Handle Firebase error (optional)
             }
         });
     }
 }
+
+
 
 
 

@@ -14,12 +14,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.annotation.NonNull;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+
 public class SignUpActivity extends AppCompatActivity {
     private EditText usernameInput, emailInput, passwordInput;
     private ImageView togglePassword;
     private Button signupButton;
     private TextView loginLink;
-
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -27,19 +32,16 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        // Setup views
         firebaseAuth = FirebaseAuth.getInstance();
-
         usernameInput = findViewById(R.id.username_input);
         emailInput = findViewById(R.id.email_input);
         passwordInput = findViewById(R.id.password_input);
-        togglePassword = findViewById(R.id.toggle_password_visibility); // optional, if added
+        togglePassword = findViewById(R.id.toggle_password_visibility); // if used
         signupButton = findViewById(R.id.signup_button);
         loginLink = findViewById(R.id.login_link);
 
-        // Optional: Toggle password visibility
+        // Password visibility toggle (optional)
         if (togglePassword != null) {
             final boolean[] isVisible = {false};
             togglePassword.setOnClickListener(v -> {
@@ -65,23 +67,46 @@ public class SignUpActivity extends AppCompatActivity {
                 return;
             }
 
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            if (user != null) {
-                                FirebaseDatabase.getInstance().getReference("Users")
-                                        .child(user.getUid())
-                                        .child("Profile")
-                                        .setValue(new UserProfile(username, email));
-                            }
-                            Toast.makeText(this, "Signup successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(this, "Signup failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
+            DatabaseReference usernamesRef = FirebaseDatabase.getInstance().getReference("Usernames");
+
+            usernamesRef.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        Toast.makeText(SignUpActivity.this, "Username already taken.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                                        if (user != null) {
+                                            String uid = user.getUid();
+
+                                            // Store under Users node
+                                            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                                                    .getReference("Users").child(uid);
+                                            userRef.child("email").setValue(email);
+                                            userRef.child("username").setValue(username);
+
+                                            // Store under Usernames node
+                                            usernamesRef.child(username).setValue(uid);
+
+                                            Toast.makeText(SignUpActivity.this, "Signup successful", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                            finish();
+                                        }
+                                    } else {
+                                        Toast.makeText(SignUpActivity.this, "Signup failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(SignUpActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         loginLink.setOnClickListener(v -> {
@@ -89,17 +114,5 @@ public class SignUpActivity extends AppCompatActivity {
             finish();
         });
     }
-
-    public static class UserProfile {
-        public String username;
-        public String email;
-
-        public UserProfile() {
-        }
-
-        public UserProfile(String username, String email) {
-            this.username = username;
-            this.email = email;
-        }
-    }
 }
+

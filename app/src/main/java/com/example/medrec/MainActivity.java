@@ -15,35 +15,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
-
-    // Declare Firebase database reference
-    DatabaseReference databaseReference;
-
-    // Declare button
-    Button addMediaButton;
+    private Button browseButton, libraryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // Not extending BaseActivity
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        browseButton = findViewById(R.id.btn_browse_media);
+        libraryButton = findViewById(R.id.btn_my_library);
 
-        // Initialize Firebase Database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Media");
+        browseButton.setOnClickListener(v -> startActivity(new Intent(this, BrowseActivity.class)));
+        libraryButton.setOnClickListener(v -> startActivity(new Intent(this, LibraryActivity.class)));
 
-        Button btnMyLibrary = findViewById(R.id.btnMyLibrary);
-        Button btnBrowseMedia = findViewById(R.id.btnBrowseMedia);
-
-        btnMyLibrary.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, HomeActivity.class));
-        });
-
-        btnBrowseMedia.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, BrowseActivity.class));
-        });
-
+        // Settings icon click
+        findViewById(R.id.settings_icon).setOnClickListener(v ->
+                startActivity(new Intent(this, SettingsActivity.class)));
     }
 }
+
 

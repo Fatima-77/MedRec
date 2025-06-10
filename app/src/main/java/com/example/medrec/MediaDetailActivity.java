@@ -8,16 +8,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import java.util.HashMap;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.medrec.model.Media;
-import com.example.medrec.model.LibraryEntry;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import android.widget.EditText;
+import android.text.InputType;
+import androidx.annotation.Nullable;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MediaDetailActivity extends AppCompatActivity {
 
@@ -86,34 +91,97 @@ public class MediaDetailActivity extends AppCompatActivity {
                     if (selectedStatus.equals("Remove from Library")) {
                         removeFromLibrary();
                     } else {
-                        saveMediaToLibrary(selectedStatus);
+                        // Ask for optional rating if not "planned"
+                        if (selectedStatus.contains("Completed") || selectedStatus.contains("Watching")) {
+                            showRatingDialog(selectedStatus);
+                        } else {
+                            logUserInteraction(selectedStatus, null); // no rating
+                        }
                     }
                 })
                 .show();
     }
 
+
     private void saveMediaToLibrary(String status) {
-        if (media == null) return;
-
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userLibRef = FirebaseDatabase.getInstance()
-                .getReference("Users").child(userId).child("Library").child(media.getId());
-
-        userLibRef.setValue(new LibraryEntry(media, status));
-        Toast.makeText(this, "Added to Library as " + status, Toast.LENGTH_SHORT).show();
+        logUserInteraction(status, null);// replaces older saving
     }
 
     private void removeFromLibrary() {
+        logUserInteraction("remove", null);// also uses the same function
+    }
+
+    private void logUserInteraction(String status, @Nullable Double rating) {
         if (media == null) return;
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userLibRef = FirebaseDatabase.getInstance()
-                .getReference("Users").child(userId).child("Library").child(media.getId());
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) return;
+        String uid = currentUser.getUid();
 
-        userLibRef.removeValue()
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Removed from Library", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Failed to remove", Toast.LENGTH_SHORT).show());
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(uid)
+                .child("interactions")
+                .child(media.getId());
+
+        if (status.equals("remove")) {
+            ref.removeValue()
+                    .addOnSuccessListener(aVoid -> Toast.makeText(this, "Removed from Library", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to remove", Toast.LENGTH_SHORT).show());
+        } else {
+            String normalized = convertStatus(status);
+
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("status", normalized);
+            data.put("timestamp", System.currentTimeMillis());
+            if (rating != null) {
+                data.put("rating", rating);
+            }
+
+            ref.setValue(data);
+            Toast.makeText(this, "Saved as " + status, Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private String convertStatus(String input) {
+        input = input.toLowerCase();
+        if (input.contains("watching") || input.contains("reading")) return "watching/reading";
+        if (input.contains("plan")) return "planned";
+        if (input.contains("completed")) return "completed";
+        if (input.contains("dropped")) return "dropped";
+        return "planned";
+    }
+
+    private void showRatingDialog(String status) {
+        final EditText input = new EditText(this);
+        input.setHint("Enter rating (1.0 - 10.0)");
+        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Optional Rating")
+                .setMessage("Enter your rating for this media (leave blank to skip):")
+                .setView(input)
+                .setPositiveButton("Save", (dialog, which) -> {
+                    String inputText = input.getText().toString().trim();
+                    Double rating = null;
+                    if (!inputText.isEmpty()) {
+                        try {
+                            rating = Double.parseDouble(inputText);
+                            if (rating < 1.0 || rating > 10.0) {
+                                Toast.makeText(this, "Rating must be 1.0 to 10.0", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(this, "Invalid rating", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    logUserInteraction(status, rating);
+                })
+                .setNegativeButton("Skip", (dialog, which) -> logUserInteraction(status, null))
+                .show();
+    }
+
 
 }
 

@@ -29,8 +29,6 @@
 
         <activity android:name=".SignUpActivity" />
 
-        <activity android:name=".HomeActivity"/>
-
         <activity android:name=".MainActivity"/>
 
         <activity android:name=".BrowseActivity"/>

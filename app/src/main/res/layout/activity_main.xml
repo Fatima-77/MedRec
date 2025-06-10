@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:fitsSystemWindows="true">
+    android:background="@color/grey_background"
+    android:padding="24dp"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!-- Top Banner -->
-    <include layout="@layout/toolbar" />
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MediaNest"
+        android:gravity="end">
+
+        <ImageView
+            android:id="@+id/settings_icon"
+            android:src="@drawable/ic_settings"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="Settings"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:text="Welcome to MediaNest"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_marginBottom="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/btnMyLibrary"
+        android:id="@+id/btn_browse_media"
+        android:text="Browse Media"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Library" />
+        android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/btnBrowseMedia"
+        android:id="@+id/btn_my_library"
+        android:text="My Library"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Browse Media" />
-
+        android:layout_height="wrap_content" />
 </LinearLayout>
