@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/grey_background">
+
+    <!-- Top Gradient Banner (with page title) -->
+    <LinearLayout
+        android:id="@+id/top_banner"
+        android:orientation="vertical"
+        android:background="@color/gradient_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/text_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Page Title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Page-specific content gets injected here -->
+    <FrameLayout
+        android:id="@+id/base_content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"/>
+</LinearLayout>

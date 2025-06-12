@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
 import android.widget.ImageView;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseNoNavActivity {
 
     EditText emailInput, passwordInput;
     Button loginButton;
@@ -26,9 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setPageTitle("Login");
 
         // Initialize Firebase
         FirebaseApp.initializeApp(this);

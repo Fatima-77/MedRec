@@ -24,7 +24,7 @@ import android.text.InputType;
 import androidx.annotation.Nullable;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MediaDetailActivity extends AppCompatActivity {
+public class MediaDetailActivity extends BaseActivity {
 
     private Media media;
 
@@ -32,9 +32,7 @@ public class MediaDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_detail);
-
-        Toolbar toolbar = findViewById(R.id.detailToolbar);
-        setSupportActionBar(toolbar);
+        setPageTitle("Details");
 
         // Get the media object
         media = (Media) getIntent().getSerializableExtra("Media");

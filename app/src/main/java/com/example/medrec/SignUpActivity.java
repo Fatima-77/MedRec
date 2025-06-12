@@ -20,7 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends BaseNoNavActivity {
     private EditText usernameInput, emailInput, passwordInput;
     private ImageView togglePassword;
     private Button signupButton;
@@ -31,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        setPageTitle("Sign Up");
 
         // Setup views
         firebaseAuth = FirebaseAuth.getInstance();

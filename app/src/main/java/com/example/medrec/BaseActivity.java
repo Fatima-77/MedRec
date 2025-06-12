@@ -1,25 +1,26 @@
 package com.example.medrec;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.View;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
 
     protected FrameLayout contentFrame;
     protected BottomNavigationView bottomNavigationView;
-    protected TextView appNameText, pageTitleText;
-    protected TextView appNameText, pageTitleText;
-    protected BottomNavigationView bottomNavigationView;
+    protected TextView pageTitleText;
+    protected ImageView backButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,56 +29,87 @@ public class BaseActivity extends AppCompatActivity {
 
         contentFrame = findViewById(R.id.base_content_frame);
         bottomNavigationView = findViewById(R.id.base_bottom_nav);
-        appNameText = findViewById(R.id.app_name_text);
-        pageTitleText = findViewById(R.id.page_title_text);
+        pageTitleText = findViewById(R.id.text_page_title);
+        backButton = findViewById(R.id.back_button);
+
+        // Set up back button: finish activity by default
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
+
+        // Apply dynamic status bar padding to the banner
+        LinearLayout topBanner = findViewById(R.id.top_banner);
+        if (topBanner != null) {
+            int statusBarHeight = getStatusBarHeight(this);
+            topBanner.setPadding(
+                    topBanner.getPaddingLeft(),
+                    statusBarHeight,
+                    topBanner.getPaddingRight(),
+                    topBanner.getPaddingBottom()
+            );
+        }
 
         setupBottomNavigation();
     }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        View root = getLayoutInflater().inflate(R.layout.activity_base, null);
-        super.setContentView(root);
-
-        // Setup references after base layout is set
-        appNameText = root.findViewById(R.id.text_app_name);
-        pageTitleText = root.findViewById(R.id.text_page_title);
-        bottomNavigationView = root.findViewById(R.id.base_bottom_nav);
-
-        if (contentFrame != null) {
+        if (contentFrame == null) {
+            super.setContentView(layoutResID);
+        } else {
             LayoutInflater.from(this).inflate(layoutResID, contentFrame, true);
         }
     }
 
-    protected void setPageTitle(String title) {
+    public void setPageTitle(String title) {
         if (pageTitleText != null) {
-            pageTitleText.setVisibility(View.VISIBLE);
             pageTitleText.setText(title);
         }
     }
 
-    protected void setupBottomNavigation() {
+    private void setupBottomNavigation() {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_home && !(getClass().equals(MainActivity.class))) {
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+            if (id == R.id.nav_library) {
+                if (!(this instanceof LibraryActivity)) {
+                    startActivity(new Intent(this, LibraryActivity.class));
+                    overridePendingTransition(0, 0);
+                }
                 return true;
-            } else if (id == R.id.nav_library && !(getClass().equals(LibraryActivity.class))) {
-                startActivity(new Intent(this, LibraryActivity.class));
-                finish();
+            } else if (id == R.id.nav_settings) {
+                if (!(this instanceof SettingsActivity)) {
+                    startActivity(new Intent(this, SettingsActivity.class));
+                    overridePendingTransition(0, 0);
+                }
                 return true;
-            } else if (id == R.id.nav_profile && !(getClass().equals(ProfileActivity.class))) {
-                startActivity(new Intent(this, ProfileActivity.class));
-                finish();
+            } else if (id == R.id.nav_profile) {
+                if (!(this instanceof ProfileActivity)) {
+                    startActivity(new Intent(this, ProfileActivity.class));
+                    overridePendingTransition(0, 0);
+                }
                 return true;
-            } else if (id == R.id.nav_settings && !(getClass().equals(SettingsActivity.class))) {
-                startActivity(new Intent(this, SettingsActivity.class));
-                finish();
+            } else if (id == R.id.base_bottom_nav) {
+                if (!(this instanceof BrowseActivity)) {
+                    startActivity(new Intent(this, BrowseActivity.class));
+                    overridePendingTransition(0, 0);
+                }
                 return true;
             }
             return false;
         });
     }
+
+    // Helper for dynamic status bar height
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 }
+
+
+
 

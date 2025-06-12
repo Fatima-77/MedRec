@@ -35,6 +35,8 @@
 
         <activity android:name=".MediaDetailActivity"/>
 
+        <activity android:name=".LibraryActivity"/>
+
     </application>
 
 </manifest>
