@@ -2,16 +2,12 @@ package com.example.medrec;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
 import java.util.HashMap;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.medrec.model.Media;
@@ -23,6 +19,7 @@ import android.widget.EditText;
 import android.text.InputType;
 import androidx.annotation.Nullable;
 import com.google.firebase.auth.FirebaseUser;
+import android.view.View;
 
 public class MediaDetailActivity extends BaseActivity {
 
@@ -32,7 +29,10 @@ public class MediaDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_detail);
-        setPageTitle("Details");
+        setPageTitle("Media Details");
+
+        // Show bookmark icon in the banner and attach click logic
+        showBookmark(true, v -> showStatusDialog());
 
         // Get the media object
         media = (Media) getIntent().getSerializableExtra("Media");
@@ -62,20 +62,7 @@ public class MediaDetailActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_media_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_save_library) {
-            showStatusDialog();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    // No options menu, no Toolbar
 
     private void showStatusDialog() {
         String[] options = {
@@ -100,13 +87,12 @@ public class MediaDetailActivity extends BaseActivity {
                 .show();
     }
 
-
     private void saveMediaToLibrary(String status) {
-        logUserInteraction(status, null);// replaces older saving
+        logUserInteraction(status, null);
     }
 
     private void removeFromLibrary() {
-        logUserInteraction("remove", null);// also uses the same function
+        logUserInteraction("remove", null);
     }
 
     private void logUserInteraction(String status, @Nullable Double rating) {
@@ -179,9 +165,8 @@ public class MediaDetailActivity extends BaseActivity {
                 .setNegativeButton("Skip", (dialog, which) -> logUserInteraction(status, null))
                 .show();
     }
-
-
 }
+
 
 
 

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +20,7 @@ public class BaseActivity extends AppCompatActivity {
     protected BottomNavigationView bottomNavigationView;
     protected TextView pageTitleText;
     protected ImageView backButton;
+    protected ImageView bannerBookmark;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +37,11 @@ public class BaseActivity extends AppCompatActivity {
             backButton.setOnClickListener(v -> finish());
         }
 
+        bannerBookmark = findViewById(R.id.banner_bookmark);
+        if (bannerBookmark != null) {
+            bannerBookmark.setVisibility(View.GONE); // hidden by default
+        }
+
         // Apply dynamic status bar padding to the banner
         LinearLayout topBanner = findViewById(R.id.top_banner);
         if (topBanner != null) {
@@ -50,6 +55,14 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         setupBottomNavigation();
+    }
+
+    // Let child activities control the icon
+    public void showBookmark(boolean show, View.OnClickListener clickListener) {
+        if (bannerBookmark != null) {
+            bannerBookmark.setVisibility(show ? View.VISIBLE : View.GONE);
+            bannerBookmark.setOnClickListener(show ? clickListener : null);
+        }
     }
 
     @Override
