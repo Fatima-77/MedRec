@@ -1,0 +1,8 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State: included (checked) -->
+    <item android:state_checked="true" android:drawable="@drawable/ic_checkbox_checked"/>
+    <!-- State: excluded (custom, set in code using setButtonDrawable or setTag) -->
+    <item android:state_selected="true" android:drawable="@drawable/ic_checkbox_exclude"/>
+    <!-- State: default/neutral -->
+    <item android:drawable="@drawable/ic_checkbox_unchecked"/>
+</selector>

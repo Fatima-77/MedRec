@@ -1,28 +1,32 @@
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- item_trending_media.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imgTrendingCover"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:background="@drawable/banner_gradient"
+        android:contentDescription="Trending Poster"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/textTrendingTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:textColor="@color/gradient_dark"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="6dp"/>
+</LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgTrendingCover"
-            android:layout_width="140dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:background="@drawable/banner_gradient"
-            android:contentDescription="Trending Poster"/>
 
-        <TextView
-            android:id="@+id/textMediaTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Media Title"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_marginTop="8dp"/>
-    </LinearLayout>
 

@@ -1,30 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/grey_background"
-    android:paddingHorizontal="16dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="8dp">
+    android:fitsSystemWindows="true">
 
-    <Spinner
-        android:id="@+id/spinnerType"
+    <!-- Top: Media Type Spinner and Filter Icon -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="@color/purple_theme"
-        android:popupBackground="@color/white" />
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
 
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
+
+        <ImageView
+            android:id="@+id/iconFilter"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_filter_list"
+            android:contentDescription="Filter"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Expandable Filter Panel -->
+    <LinearLayout
+        android:id="@+id/filterPanel"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@drawable/edit_text_background"
+        android:padding="16dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- Search bar -->
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Search by title"
+            android:inputType="text"
+            android:background="@drawable/edit_text_background"
+            android:padding="10dp"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="8dp"
+            android:imeOptions="actionDone" />
+
+        <!-- Scrollable genre checkboxes -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:fillViewport="true"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:id="@+id/genreCheckboxContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </ScrollView>
+
+        <!-- Sort options -->
+        <Spinner
+            android:id="@+id/spinnerSort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnApplyFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apply"
+            android:backgroundTint="@color/gradient_dark"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <!-- RecyclerView for media -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMedia"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp" />
+        android:padding="8dp"
+        android:clipToPadding="false"/>
+
 </LinearLayout>
+
+
 
 
 

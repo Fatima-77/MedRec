@@ -5,17 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.medrec.R;
 import com.example.medrec.model.Media;
-import android.widget.TextView;
-
 import java.util.List;
 
-public class TrendingMediaAdapter extends RecyclerView.Adapter<TrendingMediaAdapter.ViewHolder> {
-    private final List<Media> trendingList;
+public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHolder> {
+    private final List<Media> libraryList;
     private final Context context;
     private final OnItemClickListener listener;
 
@@ -23,42 +22,49 @@ public class TrendingMediaAdapter extends RecyclerView.Adapter<TrendingMediaAdap
         void onItemClick(Media media);
     }
 
-    public TrendingMediaAdapter(Context context, List<Media> trendingList, OnItemClickListener listener) {
+    public LibraryAdapter(Context context, List<Media> libraryList, OnItemClickListener listener) {
         this.context = context;
-        this.trendingList = trendingList;
+        this.libraryList = libraryList;
         this.listener = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.item_trending_media, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_library_media, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public int getItemCount() {
-        return trendingList.size();
-    }
-
-    @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Media media = trendingList.get(position);
+        Media media = libraryList.get(position);
+        holder.textTitle.setText(media.getTitle());
+        holder.textStatus.setText(media.getStatus());
+        holder.textUserRating.setText(media.getUserRating() != null ? "Your rating: " + media.getUserRating() : "");
         Glide.with(context)
                 .load(media.getCover())
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.imgCover);
-        holder.textTitle.setText(media.getTitle());
-        holder.imgCover.setOnClickListener(v -> listener.onItemClick(media));
+
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(media));
+    }
+
+    @Override
+    public int getItemCount() {
+        return libraryList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgCover;
-        TextView textTitle;
+        TextView textTitle, textStatus, textUserRating;
+
         public ViewHolder(View v) {
             super(v);
-            imgCover = v.findViewById(R.id.imgTrendingCover);
-            textTitle = v.findViewById(R.id.textTrendingTitle);
+            imgCover = v.findViewById(R.id.imgCover);
+            textTitle = v.findViewById(R.id.textTitle);
+            textStatus = v.findViewById(R.id.textStatus);
+            textUserRating = v.findViewById(R.id.textUserRating);
         }
     }
 }
+
