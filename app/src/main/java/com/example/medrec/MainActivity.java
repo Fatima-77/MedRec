@@ -7,11 +7,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.medrec.adapter.TrendingMediaAdapter;
 import com.example.medrec.model.Media;
+import androidx.annotation.NonNull;
 import com.google.firebase.database.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,111 +21,94 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TextView titleTyping;
-    private ViewPager2 carouselViewPager;
+    private RecyclerView carouselRecycler;
     private TrendingMediaAdapter carouselAdapter;
     private List<Media> trendingList = new ArrayList<>();
 
-    // Utility: Get status bar height in pixels
-    public static int getStatusBarHeight(android.content.Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
+    public static int getStatusBarHeight(android.content.Context c) {
+        int resId = c.getResources().getIdentifier("status_bar_height","dimen","android");
+        return resId>0 ? c.getResources().getDimensionPixelSize(resId) : 0;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle s) {
+        super.onCreate(s);
         setContentView(R.layout.activity_main);
 
         titleTyping = findViewById(R.id.text_typing_animation);
         Button btnBrowse = findViewById(R.id.btn_browse);
         Button btnLibrary = findViewById(R.id.btn_library);
-        carouselViewPager = findViewById(R.id.viewpager_carousel);
-
         ImageView iconProfile = findViewById(R.id.icon_profile);
         ImageView iconSettings = findViewById(R.id.icon_settings);
+        LinearLayout banner = findViewById(R.id.main_banner);
 
-        btnBrowse.setOnClickListener(v -> startActivity(new Intent(this, BrowseActivity.class)));
-        btnLibrary.setOnClickListener(v -> startActivity(new Intent(this, LibraryActivity.class)));
-        iconProfile.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
-        iconSettings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
-
-        LinearLayout mainBanner = findViewById(R.id.main_banner);
-        if (mainBanner != null) {
-            int statusBarHeight = getStatusBarHeight(this);
-            mainBanner.setPadding(
-                    mainBanner.getPaddingLeft(),
-                    statusBarHeight,
-                    mainBanner.getPaddingRight(),
-                    mainBanner.getPaddingBottom()
-            );
+        // status bar padding
+        if (banner!=null) {
+            int h = getStatusBarHeight(this);
+            banner.setPadding(banner.getPaddingLeft(),h,
+                    banner.getPaddingRight(),banner.getPaddingBottom());
         }
 
-        // Typing animation
+        // animate
         startTypingAnimation("Welcome to MediaNest");
 
-        // Set up carousel adapter
-        carouselAdapter = new TrendingMediaAdapter(this, trendingList, media -> {
-            Intent intent = new Intent(this, MediaDetailActivity.class);
-            intent.putExtra("Media", media);
-            startActivity(intent);
+        // nav
+        btnBrowse.setOnClickListener(v->startActivity(
+                new Intent(this, BrowseActivity.class)));
+        btnLibrary.setOnClickListener(v->startActivity(
+                new Intent(this, LibraryActivity.class)));
+        iconProfile.setOnClickListener(v->startActivity(
+                new Intent(this, ProfileActivity.class)));
+        iconSettings.setOnClickListener(v->startActivity(
+                new Intent(this, SettingsActivity.class)));
+
+        // carousel RecyclerView
+        carouselRecycler = findViewById(R.id.viewpager_carousel);
+        carouselAdapter = new TrendingMediaAdapter(this, trendingList, m->{
+            Intent i=new Intent(this,MediaDetailActivity.class);
+            i.putExtra("Media",m);
+            startActivity(i);
         });
-        carouselViewPager.setAdapter(carouselAdapter);
+        carouselRecycler.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        carouselRecycler.setAdapter(carouselAdapter);
 
-        // Make carousel dynamic: peek effect + transformer
-        carouselViewPager.setOffscreenPageLimit(3);
-        carouselViewPager.setClipToPadding(false);
-        carouselViewPager.setPadding(80, 0, 80, 0); // adjust for more/less peek
-
-        carouselViewPager.setPageTransformer((page, position) -> {
-            float scale = Math.max(0.9f, 1 - Math.abs(position) * 0.1f);
-            page.setScaleY(scale);
-            page.setScaleX(scale);
-            page.setAlpha(0.6f + (scale - 0.9f));
-        });
-
-        // Fetch trending from Firebase
+        // fetch
         fetchTrendingMedia();
     }
 
     private void startTypingAnimation(String text) {
-        Handler handler = new Handler();
-        final int[] i = {0};
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (i[0] <= text.length()) {
-                    titleTyping.setText(text.substring(0, i[0]));
-                    i[0]++;
-                    handler.postDelayed(this, 45);
+        Handler h=new Handler();
+        final int[] i={0};
+        Runnable r=new Runnable(){
+            public void run(){
+                if(i[0]<=text.length()){
+                    titleTyping.setText(text.substring(0,i[0]++));
+                    h.postDelayed(this,45);
                 }
             }
         };
-        handler.post(runnable);
+        h.post(r);
     }
 
-    private void fetchTrendingMedia() {
-        DatabaseReference mediaRef = FirebaseDatabase.getInstance().getReference("Media");
-        mediaRef.orderByChild("rating").limitToLast(6)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+    private void fetchTrendingMedia(){
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Media");
+        ref.orderByChild("rating").limitToLast(6)
+                .addListenerForSingleValueEvent(new ValueEventListener(){
+                    public void onDataChange(@NonNull DataSnapshot snap){
                         trendingList.clear();
-                        for (DataSnapshot snap : snapshot.getChildren()) {
-                            Media media = snap.getValue(Media.class);
-                            if (media != null) trendingList.add(media); // add for correct order
+                        for(DataSnapshot s: snap.getChildren()){
+                            Media m=s.getValue(Media.class);
+                            if(m!=null) trendingList.add(m);
                         }
-                        Collections.reverse(trendingList); // highest rating first
+                        Collections.reverse(trendingList);
                         carouselAdapter.notifyDataSetChanged();
                     }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
+                    public void onCancelled(@NonNull DatabaseError e){}
                 });
     }
 }
+
 
 
 

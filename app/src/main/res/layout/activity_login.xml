@@ -1,95 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_background"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:gravity="center_horizontal">
 
-        <!-- Top Banner -->
-        <include layout="@layout/toolbar" />
-
-        <!-- Login Fields Container -->
-        <LinearLayout
-            android:id="@+id/login_layout"
+        <EditText
+            android:id="@+id/editEmail"
             android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edit_text_background"
+            android:padding="10dp"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/editPassword"
+            android:layout_marginBottom="14dp" />
+
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@drawable/edit_text_background"
+            android:padding="10dp"
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="10dp"
+            android:drawableEnd="@drawable/ic_visibility"/>
+
+        <TextView
+            android:id="@+id/textForgotPassword"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:gravity="center_horizontal">
+            android:text="Forgot Password?"
+            android:textColor="@color/purple_theme"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:layout_marginBottom="16dp"/>
 
-            <!-- Email Field -->
-            <EditText
-                android:id="@+id/email_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_hint"
-                android:autofillHints="emailAddress"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp" />
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Log In"
+            android:backgroundTint="@color/gradient_dark"
+            android:textColor="@android:color/white"/>
 
-            <!-- Password Field with Toggle -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="12dp"/>
 
-                <EditText
-                    android:id="@+id/password_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password_hint"
-                    android:inputType="textPassword"
-                    android:paddingEnd="48dp"
-                    android:imeOptions="actionDone"
-                    android:autofillHints="password" />
-
-                <ImageView
-                    android:id="@+id/toggle_password_visibility"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_visibility_off"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="12dp"
-                    android:clickable="true"
-                    android:focusable="true" />
-            </RelativeLayout>
-
-            <!-- Login Button -->
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login_button"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/purple_theme" />
-
-            <!-- Signup Link -->
-            <TextView
-                android:id="@+id/signup_link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/signup_prompt"
-                android:textColor="@color/gradient_dark"
-                android:layout_marginTop="20dp" />
-
-            <!-- Forgot Password Link -->
-            <TextView
-                android:id="@+id/reset_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/forgot_password"
-                android:textColor="@color/gradient_dark"
-                android:layout_marginTop="10dp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don’t have an account? Sign up"
+            android:textColor="@color/gradient_dark"
+            android:textStyle="italic"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </ScrollView>
+
+
 
 
 

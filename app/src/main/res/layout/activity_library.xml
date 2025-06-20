@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_background"
     android:fitsSystemWindows="true">
 
-    <!-- Banner is included by BaseActivity -->
-
-    <!-- Filter bar -->
+    <!-- Filter bar (no extra title!) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,14 +15,12 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Your Library"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/gradient_dark"
-            android:layout_weight="1"/>
+            android:spinnerMode="dropdown"/>
 
         <ImageView
             android:id="@+id/iconFilter"
@@ -65,7 +60,6 @@
             android:layout_height="180dp"
             android:fillViewport="true"
             android:layout_marginBottom="8dp">
-
             <LinearLayout
                 android:id="@+id/genreCheckboxContainer"
                 android:orientation="vertical"
@@ -88,7 +82,7 @@
             android:textColor="@android:color/white"/>
     </LinearLayout>
 
-    <!-- User Library RecyclerView -->
+    <!-- Library list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerLibrary"
         android:layout_width="match_parent"
@@ -97,9 +91,8 @@
         android:padding="8dp"
         android:clipToPadding="false"/>
 
-    <!-- Recommendations placeholder -->
+    <!-- Recommendations carousel -->
     <TextView
-        android:id="@+id/recommendationsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Based on your Library"
@@ -120,5 +113,6 @@
         android:paddingEnd="16dp"
         android:layout_marginBottom="16dp"/>
 </LinearLayout>
+
 
 

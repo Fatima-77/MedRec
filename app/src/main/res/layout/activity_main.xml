@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey_background">
 
-    <!-- Banner with only page title -->
+    <!-- Banner -->
     <LinearLayout
         android:id="@+id/main_banner"
         android:orientation="horizontal"
@@ -17,9 +17,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/main_page_title"
@@ -29,7 +27,7 @@
             android:text="Home"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <ImageView
             android:id="@+id/icon_profile"
@@ -39,6 +37,7 @@
             android:contentDescription="Profile"
             android:padding="4dp"
             android:layout_marginEnd="10dp"/>
+
         <ImageView
             android:id="@+id/icon_settings"
             android:layout_width="28dp"
@@ -48,7 +47,7 @@
             android:padding="4dp"/>
     </LinearLayout>
 
-    <!-- Typing Animation (NOT in banner) -->
+    <!-- Typing animation & subheader -->
     <TextView
         android:id="@+id/text_typing_animation"
         android:layout_width="wrap_content"
@@ -63,7 +62,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Subheader -->
     <TextView
         android:id="@+id/text_subheader"
         android:layout_width="wrap_content"
@@ -76,15 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Extra vertical space before trending heading -->
-    <Space
-        android:id="@+id/space_before_trending"
-        android:layout_width="1dp"
-        android:layout_height="22dp"
-        app:layout_constraintTop_toBottomOf="@id/text_subheader"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Trending heading LEFT-aligned -->
+    <!-- Trending heading -->
     <TextView
         android:id="@+id/text_trending_heading"
         android:layout_width="wrap_content"
@@ -94,55 +84,50 @@
         android:textSize="15sp"
         android:textColor="@color/gradient_dark"
         android:layout_marginStart="26dp"
-        android:layout_marginBottom="6dp"
-        app:layout_constraintTop_toBottomOf="@id/space_before_trending"
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toBottomOf="@id/text_subheader"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Carousel (ViewPager2) with “peek” effect -->
-    <androidx.viewpager2.widget.ViewPager2
+    <!-- Carousel now a horizontal RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewpager_carousel"
         android:layout_width="match_parent"
         android:layout_height="260dp"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
         android:paddingStart="48dp"
         android:paddingEnd="48dp"
-        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/text_trending_heading"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Browse Button -->
+    <!-- Buttons -->
     <Button
         android:id="@+id/btn_browse"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:text="Browse Media"
-        android:textAllCaps="false"
         android:backgroundTint="@color/purple_theme"
         android:textColor="@android:color/white"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         app:layout_constraintTop_toBottomOf="@id/viewpager_carousel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
-    <!-- Library Button -->
     <Button
         android:id="@+id/btn_library"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:text="Library"
-        android:textAllCaps="false"
         android:backgroundTint="@color/purple_theme"
         android:textColor="@android:color/white"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
         app:layout_constraintTop_toBottomOf="@id/btn_browse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
