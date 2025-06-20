@@ -7,7 +7,7 @@
     android:background="@color/grey_background"
     android:fitsSystemWindows="true">
 
-    <!-- Filter bar (no extra title!) -->
+    <!-- Top filter bar: Type spinner + Filter icon -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_marginStart="16dp"/>
     </LinearLayout>
 
-    <!-- Filter panel -->
+    <!-- Expandable filter panel -->
     <LinearLayout
         android:id="@+id/filterPanel"
         android:orientation="vertical"
@@ -42,6 +42,7 @@
         android:padding="16dp"
         android:layout_marginBottom="8dp">
 
+        <!-- Search -->
         <EditText
             android:id="@+id/editSearch"
             android:layout_width="match_parent"
@@ -52,9 +53,10 @@
             android:padding="10dp"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="8dp"
-            android:layout_marginBottom="8dp"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="8dp"/>
 
+        <!-- Scrollable genres -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="180dp"
@@ -67,6 +69,7 @@
                 android:layout_height="wrap_content"/>
         </ScrollView>
 
+        <!-- Sort + Apply (pinned) -->
         <Spinner
             android:id="@+id/spinnerSort"
             android:layout_width="match_parent"
@@ -113,6 +116,7 @@
         android:paddingEnd="16dp"
         android:layout_marginBottom="16dp"/>
 </LinearLayout>
+
 
 
 

@@ -1,15 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/grey_theme"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey_background"
+    android:fitsSystemWindows="true"
+    android:padding="16dp">
 
-    <TextView
-        android:text="Your profile info will be shown here."
-        android:textSize="18sp"
-        android:layout_gravity="center"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="wrap_content">
+
+        <!-- Username (read-only) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/textUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Email (read-only) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/textEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Age Group -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Age Group"
+            android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Ethnicity -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ethnicity"
+            android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerEthnicity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Location -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textStyle="bold"/>
+        <Spinner
+            android:id="@+id/spinnerLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Personalization toggle -->
+        <CheckBox
+            android:id="@+id/checkPersonalization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Allow personalization"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Save button -->
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Save Changes"
+            android:backgroundTint="@color/gradient_dark"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+</ScrollView>
+

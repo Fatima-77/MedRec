@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import androidx.annotation.NonNull;
@@ -31,10 +31,10 @@ public class LibraryActivity extends BaseActivity {
     private List<Media> userLibraryList = new ArrayList<>();
     private List<Media> filteredLibraryList = new ArrayList<>();
     private List<Media> recommendationList = new ArrayList<>();
-    private Map<String, Integer> genreTapStates = new HashMap<>(); // 0=neutral,1=include,2=exclude
+    private Map<String,Integer> genreTapStates = new HashMap<>();
 
-    private final String[] mediaTypes = {"All", "Anime", "Manga/Manhwa", "Light Novel", "Book"};
-    private final String[] sortOptions = {"Alphabetical", "Date Added", "User Rating", "Status"};
+    private final String[] mediaTypes = {"All","Anime","Manga/Manhwa","Light Novel","Book"};
+    private final String[] sortOptions  = {"Alphabetical","Date Added","User Rating","Status"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +42,15 @@ public class LibraryActivity extends BaseActivity {
         setContentView(R.layout.activity_library);
         setPageTitle("Library");
 
-        spinnerType = findViewById(R.id.spinnerType);
-        spinnerSort = findViewById(R.id.spinnerSort);
-        iconFilter = findViewById(R.id.iconFilter);
-        filterPanel = findViewById(R.id.filterPanel);
-        genreCheckboxContainer = findViewById(R.id.genreCheckboxContainer);
-        editSearch = findViewById(R.id.editSearch);
-        btnApplyFilters = findViewById(R.id.btnApplyFilters);
-        recyclerLibrary = findViewById(R.id.recyclerLibrary);
+        // Find views
+        spinnerType             = findViewById(R.id.spinnerType);
+        spinnerSort             = findViewById(R.id.spinnerSort);
+        iconFilter              = findViewById(R.id.iconFilter);
+        filterPanel             = findViewById(R.id.filterPanel);
+        genreCheckboxContainer  = findViewById(R.id.genreCheckboxContainer);
+        editSearch              = findViewById(R.id.editSearch);
+        btnApplyFilters         = findViewById(R.id.btnApplyFilters);
+        recyclerLibrary         = findViewById(R.id.recyclerLibrary);
         recyclerRecommendations = findViewById(R.id.recyclerRecommendations);
 
         // Setup spinners
@@ -59,7 +60,7 @@ public class LibraryActivity extends BaseActivity {
         spinnerSort.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, sortOptions));
 
-        // RecyclerViews
+        // Library RecyclerView
         libraryAdapter = new LibraryAdapter(this, filteredLibraryList, media -> {
             Intent i = new Intent(this, MediaDetailActivity.class);
             i.putExtra("Media", media);
@@ -68,6 +69,7 @@ public class LibraryActivity extends BaseActivity {
         recyclerLibrary.setLayoutManager(new LinearLayoutManager(this));
         recyclerLibrary.setAdapter(libraryAdapter);
 
+        // Recommendations RecyclerView
         recAdapter = new TrendingMediaAdapter(this, recommendationList, media -> {
             Intent i = new Intent(this, MediaDetailActivity.class);
             i.putExtra("Media", media);
@@ -77,21 +79,20 @@ public class LibraryActivity extends BaseActivity {
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerRecommendations.setAdapter(recAdapter);
 
-        // Filter icon toggle
-        iconFilter.setOnClickListener(v -> {
-            filterPanel.setVisibility(
-                    filterPanel.getVisibility()==View.GONE ? View.VISIBLE : View.GONE);
-        });
+        // Filter panel toggle
+        iconFilter.setOnClickListener(v ->
+                filterPanel.setVisibility(filterPanel.getVisibility()==View.GONE
+                        ? View.VISIBLE : View.GONE));
 
-        // Apply & collapse
+        // Apply button
         btnApplyFilters.setOnClickListener(v -> {
             applyFilters();
             filterPanel.setVisibility(View.GONE);
         });
 
-        // Enter key on search
-        editSearch.setOnEditorActionListener((v, id, ev) -> {
-            if (id==EditorInfo.IME_ACTION_DONE ||
+        // Enter on search collapses + applies
+        editSearch.setOnEditorActionListener((v, actionId, ev) -> {
+            if (actionId==EditorInfo.IME_ACTION_DONE ||
                     (ev!=null && ev.getKeyCode()==KeyEvent.KEYCODE_ENTER && ev.getAction()==KeyEvent.ACTION_DOWN)) {
                 applyFilters();
                 filterPanel.setVisibility(View.GONE);
@@ -100,88 +101,88 @@ public class LibraryActivity extends BaseActivity {
             return false;
         });
 
-        // Live filtering
-        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> p, View v, int pos, long id) { applyFilters(); }
-            public void onNothingSelected(AdapterView<?> p) {}
-        });
-        spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> p, View v, int pos, long id) { applyFilters(); }
-            public void onNothingSelected(AdapterView<?> p) {}
-        });
-        editSearch.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s,int a,int b,int c){}
-            public void onTextChanged(CharSequence s,int a,int b,int c){ applyFilters(); }
-            public void afterTextChanged(Editable e){}
-        });
+        // Live filter triggers
+        spinnerType.setOnItemSelectedListener(new SimpleItemListener());
+        spinnerSort.setOnItemSelectedListener(new SimpleItemListener());
+        editSearch.addTextChangedListener(new SimpleTextWatcher());
 
+        // Load user library & genres + recommendations
         fetchUserLibraryAndGenres();
-        fetchRecommendations(); // placeholder
+        fetchRecommendations();
+    }
+
+    private class SimpleItemListener implements AdapterView.OnItemSelectedListener {
+        @Override public void onItemSelected(AdapterView<?> p, android.view.View v, int pos, long id) {
+            applyFilters();
+        }
+        @Override public void onNothingSelected(AdapterView<?> p) {}
+    }
+    private class SimpleTextWatcher implements TextWatcher {
+        @Override public void beforeTextChanged(CharSequence s,int a,int b,int c){}
+        @Override public void onTextChanged(CharSequence s,int a,int b,int c){ applyFilters(); }
+        @Override public void afterTextChanged(Editable e){}
     }
 
     private void fetchUserLibraryAndGenres() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userLibRef = FirebaseDatabase.getInstance()
-                .getReference("Users").child(userId).child("Library");
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference libRef   = FirebaseDatabase.getInstance()
+                .getReference("Users").child(uid).child("Library");
         DatabaseReference mediaRef = FirebaseDatabase.getInstance()
                 .getReference("Media");
 
-        userLibRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            public void onDataChange(@NonNull DataSnapshot snap) {
+        libRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override public void onDataChange(@NonNull DataSnapshot snap) {
                 userLibraryList.clear();
                 Set<String> genreSet = new HashSet<>();
                 List<String> mediaIds = new ArrayList<>();
-                Map<String, DataSnapshot> entrySnaps = new HashMap<>();
+                Map<String,DataSnapshot> entries = new HashMap<>();
 
                 for (DataSnapshot e : snap.getChildren()) {
                     mediaIds.add(e.getKey());
-                    entrySnaps.put(e.getKey(), e);
+                    entries.put(e.getKey(), e);
                 }
                 if (mediaIds.isEmpty()) {
                     setupGenreCheckboxes(new ArrayList<>());
                     applyFilters();
                     return;
                 }
+                final int total = mediaIds.size(), count[] = {0};
+                for (String mid : mediaIds) {
+                    DataSnapshot entrySnap = entries.get(mid);
+                    String status         = entrySnap.child("status").getValue(String.class);
+                    Double ur             = entrySnap.child("rating").getValue(Double.class);
+                    Long ts               = entrySnap.child("timestamp").getValue(Long.class);
 
-                final int total = mediaIds.size();
-                final int[] count = {0};
-                for (String mediaId : mediaIds) {
-                    DataSnapshot entrySnap = entrySnaps.get(mediaId);
-                    String status = entrySnap.child("status").getValue(String.class);
-                    Double uRating = entrySnap.child("rating").getValue(Double.class);
-                    Long ts = entrySnap.child("timestamp").getValue(Long.class);
-
-                    mediaRef.child(mediaId)
+                    mediaRef.child(mid)
                             .addListenerForSingleValueEvent(new ValueEventListener() {
-                                public void onDataChange(@NonNull DataSnapshot mSnap) {
+                                @Override public void onDataChange(@NonNull DataSnapshot mSnap) {
                                     Media m = mSnap.getValue(Media.class);
-                                    if (m != null) {
+                                    if (m!=null) {
                                         m.setStatus(status);
-                                        m.setUserRating(uRating);
+                                        m.setUserRating(ur);
                                         m.setTimestamp(ts);
                                         userLibraryList.add(m);
-                                        if (m.getCategory()!=null)
-                                            genreSet.addAll(m.getCategory());
+                                        if (m.getCategory()!=null) genreSet.addAll(m.getCategory());
                                     }
-                                    count[0]++;
-                                    if (count[0]==total) {
+                                    if (++count[0]==total) {
                                         List<String> allGenres = new ArrayList<>(genreSet);
                                         Collections.sort(allGenres);
                                         setupGenreCheckboxes(allGenres);
                                         applyFilters();
                                     }
                                 }
-                                public void onCancelled(@NonNull DatabaseError e) {
-                                    count[0]++;
-                                    if (count[0]==total) {
-                                        setupGenreCheckboxes(new ArrayList<>(genreSet));
+                                @Override public void onCancelled(@NonNull DatabaseError e) {
+                                    if (++count[0]==total) {
+                                        List<String> allGenres = new ArrayList<>(genreSet);
+                                        Collections.sort(allGenres);
+                                        setupGenreCheckboxes(allGenres);
                                         applyFilters();
                                     }
                                 }
                             });
                 }
             }
-            public void onCancelled(@NonNull DatabaseError e) {}
+            @Override public void onCancelled(@NonNull DatabaseError e){}
         });
     }
 
@@ -189,18 +190,18 @@ public class LibraryActivity extends BaseActivity {
         genreCheckboxContainer.removeAllViews();
         genreTapStates.clear();
         for (String g : allGenres) {
-            final String genre = g; // fix for lambda scoping
+            final String genre = g;
             CheckBox cb = new CheckBox(this);
             cb.setText(genre);
             cb.setButtonDrawable(R.drawable.ic_checkbox_unchecked);
-            genreTapStates.put(genre, 0);
+            genreTapStates.put(genre,0);
             cb.setOnClickListener(v -> {
-                int s = (genreTapStates.get(genre) + 1) % 3;
-                genreTapStates.put(genre, s);
-                switch (s) {
+                int s = (genreTapStates.get(genre)+1)%3;
+                genreTapStates.put(genre,s);
+                switch(s){
                     case 0: cb.setText(genre); cb.setButtonDrawable(R.drawable.ic_checkbox_unchecked); break;
-                    case 1: cb.setText(genre + " (Include)"); cb.setButtonDrawable(R.drawable.ic_checkbox_checked); break;
-                    case 2: cb.setText(genre + " (Exclude)"); cb.setButtonDrawable(R.drawable.ic_checkbox_exclude); break;
+                    case 1: cb.setText(genre+" (Include)"); cb.setButtonDrawable(R.drawable.ic_checkbox_checked); break;
+                    case 2: cb.setText(genre+" (Exclude)"); cb.setButtonDrawable(R.drawable.ic_checkbox_exclude); break;
                 }
             });
             genreCheckboxContainer.addView(cb);
@@ -209,79 +210,73 @@ public class LibraryActivity extends BaseActivity {
 
     private void applyFilters() {
         String type = spinnerType.getSelectedItem().toString();
-        String q = editSearch.getText().toString().toLowerCase();
+        String q    = editSearch.getText().toString().toLowerCase();
         int sortIdx = spinnerSort.getSelectedItemPosition();
         filteredLibraryList.clear();
 
         for (Media m : userLibraryList) {
-            // type filter
             if (!"All".equals(type) && !m.getType().equalsIgnoreCase(type)) continue;
-            // search filter
             if (!m.getTitle().toLowerCase().contains(q)) continue;
-            // genre include/exclude
-            boolean exclude = false;
-            boolean include = false;
-            List<String> cats = m.getCategory() == null ? Collections.emptyList() : m.getCategory();
+
+            boolean exclude=false, include=false;
+            List<String> cats = m.getCategory()==null
+                    ? Collections.emptyList() : m.getCategory();
             for (String genre : genreTapStates.keySet()) {
                 int st = genreTapStates.get(genre);
-                if (st == 1 && !cats.contains(genre)) include = true;
-                if (st == 2 && cats.contains(genre)) { exclude = true; break; }
+                if (st==1 && !cats.contains(genre)) include=true;
+                if (st==2 &&  cats.contains(genre)) { exclude=true; break; }
             }
             if (exclude) continue;
-            if (hasIncludedGenres() && !matchesInclude(m)) continue;
-
+            if (genreTapStates.containsValue(1) && !matchesInclude(m)) continue;
             filteredLibraryList.add(m);
         }
 
-        // sorting
         Comparator<Media> cmp = null;
-        switch (sortIdx) {
+        switch(sortIdx) {
             case 0: cmp = Comparator.comparing(Media::getTitle, String::compareToIgnoreCase); break;
-            case 1: cmp = (a, b) -> Long.compare(
-                    b.getTimestamp() == null ? 0 : b.getTimestamp(),
-                    a.getTimestamp() == null ? 0 : a.getTimestamp()); break;
+            case 1: cmp = (a,b)->Long.compare(
+                    b.getTimestamp()==null?0:b.getTimestamp(),
+                    a.getTimestamp()==null?0:a.getTimestamp()); break;
             case 2: cmp = Comparator.comparingDouble(
-                    (Media m) -> m.getUserRating() == null ? 0 : m.getUserRating()).reversed(); break;
+                    (Media mm)->mm.getUserRating()==null?0:mm.getUserRating()).reversed(); break;
             case 3:
-                List<String> ord = Arrays.asList("Completed", "Watching", "Plan to Watch", "Dropped");
-                cmp = (a, b) -> Integer.compare(
-                        ord.indexOf(a.getStatus()) < 0 ? 99 : ord.indexOf(a.getStatus()),
-                        ord.indexOf(b.getStatus()) < 0 ? 99 : ord.indexOf(b.getStatus()));
+                List<String> ord=Arrays.asList("Completed","Watching","Plan to Watch","Dropped");
+                cmp=(a,b)->Integer.compare(
+                        ord.indexOf(a.getStatus())<0?99:ord.indexOf(a.getStatus()),
+                        ord.indexOf(b.getStatus())<0?99:ord.indexOf(b.getStatus()));
                 break;
         }
-        if (cmp != null) Collections.sort(filteredLibraryList, cmp);
+        if (cmp!=null) Collections.sort(filteredLibraryList, cmp);
         libraryAdapter.notifyDataSetChanged();
     }
 
-    private boolean hasIncludedGenres() {
-        for (int s : genreTapStates.values()) if (s == 1) return true;
-        return false;
-    }
     private boolean matchesInclude(Media m) {
-        if (m.getCategory() == null) return false;
-        for (String genre : genreTapStates.keySet()) {
-            int st = genreTapStates.get(genre);
-            if (st == 1 && m.getCategory().contains(genre)) return true;
+        if (m.getCategory()==null) return false;
+        for (String ke : genreTapStates.keySet()) {
+            if (genreTapStates.get(ke)==1 &&
+                    m.getCategory().contains(ke)) return true;
         }
         return false;
     }
 
     private void fetchRecommendations() {
-        DatabaseReference mediaRef = FirebaseDatabase.getInstance().getReference("Media");
-        mediaRef.orderByChild("rating").limitToLast(6)
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("Media");
+        ref.orderByChild("rating").limitToLast(6)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-                    public void onDataChange(@NonNull DataSnapshot snap) {
+                    @Override public void onDataChange(@NonNull DataSnapshot snap) {
                         recommendationList.clear();
-                        for (DataSnapshot s : snap.getChildren()) {
+                        for (DataSnapshot s: snap.getChildren()) {
                             Media m = s.getValue(Media.class);
-                            if (m != null) recommendationList.add(0, m);
+                            if (m!=null) recommendationList.add(0,m);
                         }
                         recAdapter.notifyDataSetChanged();
                     }
-                    public void onCancelled(@NonNull DatabaseError e) {}
+                    @Override public void onCancelled(@NonNull DatabaseError e){}
                 });
     }
 }
+
 
 
 
