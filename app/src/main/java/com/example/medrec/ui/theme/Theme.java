@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 public class Theme {
     public static void applyTheme(Activity activity) {
-        // Set Status Bar Color to Purple
+        // Set Status Bar Color to @color/colorPrimary
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

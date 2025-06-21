@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_background"
+    android:background="@color/colorLight"
     android:fillViewport="true">
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Forgot Password?"
-            android:textColor="@color/purple_theme"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:layout_gravity="end"
             android:layout_marginBottom="16dp"/>
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Log In"
-            android:backgroundTint="@color/gradient_dark"
+            android:backgroundTint="@color/colorDark"
             android:textColor="@android:color/white"/>
 
         <ProgressBar
@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don’t have an account? Sign up"
-            android:textColor="@color/gradient_dark"
+            android:textColor="@color/colorDark"
             android:textStyle="italic"
             android:padding="8dp"
             android:layout_gravity="center_horizontal"/>

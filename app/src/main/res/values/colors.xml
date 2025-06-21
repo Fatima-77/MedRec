@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_theme">#bea8e1</color>
-    <color name="gradient_dark">#485386</color>
-    <color name="grey_theme">#d9d9d9</color>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="grey_background">#d9d9d9</color>
+    <!-- Brand colors -->
+    <color name="colorPrimary">#8E44AD</color>
+    <color name="colorPrimaryDark">#6C3483</color>
+    <color name="colorAccent">#1ABC9C</color>
+    <color name="colorWarning">#E67E22</color>
+
+    <!-- Neutrals -->
+    <color name="colorDark">#2C3E50</color>
+    <color name="colorLight">#F4F4F4</color>
+    <color name="colorWhite">#FFFFFF</color>
 </resources>

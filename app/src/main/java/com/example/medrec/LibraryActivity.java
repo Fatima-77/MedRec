@@ -11,6 +11,7 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.medrec.adapter.LibraryAdapter;
 import com.example.medrec.adapter.TrendingMediaAdapter;
 import com.example.medrec.model.Media;
@@ -32,6 +33,7 @@ public class LibraryActivity extends BaseActivity {
     private List<Media> filteredLibraryList = new ArrayList<>();
     private List<Media> recommendationList = new ArrayList<>();
     private Map<String,Integer> genreTapStates = new HashMap<>();
+    private SwipeRefreshLayout swipeRefresh;
 
     private final String[] mediaTypes = {"All","Anime","Manga/Manhwa","Light Novel","Book"};
     private final String[] sortOptions  = {"Alphabetical","Date Added","User Rating","Status"};
@@ -41,6 +43,12 @@ public class LibraryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
         setPageTitle("Library");
+
+        swipeRefresh = findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(() -> {
+            fetchUserLibraryAndGenres();
+            swipeRefresh.setRefreshing(false);
+        });
 
         // Find views
         spinnerType             = findViewById(R.id.spinnerType);
@@ -126,7 +134,7 @@ public class LibraryActivity extends BaseActivity {
     private void fetchUserLibraryAndGenres() {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference libRef   = FirebaseDatabase.getInstance()
-                .getReference("Users").child(uid).child("Library");
+                .getReference("Users").child(uid).child("interactions");
         DatabaseReference mediaRef = FirebaseDatabase.getInstance()
                 .getReference("Media");
 
