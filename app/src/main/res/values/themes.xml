@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Splash screen theme -->
+    <!-- Splash-screen theme remains unchanged -->
     <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <!-- Main app theme -->
-    <style name="Theme.MedRec" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Core brand colors -->
+    <!-- Main DayNight theme -->
+    <style name="Theme.MedRec.DayNight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Surface / cards background -->
+        <item name="colorSurface">@color/colorWhite</item>
+        <!-- Text on background -->
+        <item name="colorOnBackground">@color/colorDark</item>
+
+        <!-- Brand colors -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorAccent</item>
@@ -19,11 +24,18 @@
         <item name="android:windowBackground">@color/colorLight</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
 
-        <!-- Text defaults -->
+        <!-- Text defaults → overridden by TextAppearances -->
         <item name="android:textColorPrimary">@color/colorDark</item>
         <item name="android:textColorSecondary">@color/colorPrimary</item>
-    </style>
 
+        <!-- Typography → reference our new TextAppearance styles -->
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.MediaNest.Display</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MediaNest.Headline</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.MediaNest.Body</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.MediaNest.Caption</item>
+
+    </style>
 </resources>
 
 

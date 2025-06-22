@@ -1,5 +1,6 @@
-<!-- item_trending_media.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,19 +14,17 @@
         android:scaleType="centerCrop"
         android:background="@color/colorPrimary"
         android:contentDescription="Trending Poster"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginBottom="4dp" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textTrendingTitle"
+        style="@style/TextAppearance.MediaNest.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:textSize="15sp"
         android:maxLines="2"
         android:ellipsize="end"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginTop="6dp" />
 </LinearLayout>
 
 

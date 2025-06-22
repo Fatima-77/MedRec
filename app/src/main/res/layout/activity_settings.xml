@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,22 +9,28 @@
     android:fitsSystemWindows="true"
     android:padding="16dp">
 
-    <!-- Log out -->
-    <Button
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchDarkMode"
+        style="?attr/materialSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dark Mode"
+        android:layout_marginBottom="16dp" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogout"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="Log Out"
-        android:backgroundTint="@color/colorDark"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="16dp"/>
+        app:backgroundTint="@color/colorDark"
+        android:layout_marginBottom="16dp" />
 
-    <!-- About Us -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAbout"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="About Us"
-        android:backgroundTint="@color/colorDark"
-        android:textColor="@android:color/white"/>
+        app:backgroundTint="@color/colorDark" />
 </LinearLayout>

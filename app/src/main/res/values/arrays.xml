@@ -4,7 +4,14 @@
         <item>All</item>
         <item>Watching</item>
         <item>Completed</item>
-        <item>Plan to Watch</item>
+        <item>Plan to Watch/Read</item>
+        <item>Dropped</item>
+    </string-array>
+
+    <string-array name="library_statuses">
+        <item>Watching</item>
+        <item>Completed</item>
+        <item>Plan to Watch/Read</item>
         <item>Dropped</item>
     </string-array>
 </resources>

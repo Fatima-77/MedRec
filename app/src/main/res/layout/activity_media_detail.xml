@@ -40,6 +40,7 @@
 
     <!-- Scrolling content -->
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -50,31 +51,44 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <!-- Example content below the collapsing header -->
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textDetailTitle"
+                style="@style/TextAppearance.MediaNest.Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorDark"
                 android:layout_marginBottom="8dp"/>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textDetailDescription"
+                style="@style/TextAppearance.MediaNest.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorDark"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- You Might Also Like header -->
-            <TextView
+            <!-- Genres -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textGenres"
+                style="@style/TextAppearance.MediaNest.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Genres: "
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Source Rating -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textSourceRating"
+                style="@style/TextAppearance.MediaNest.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rating: "
+                android:layout_marginBottom="16dp"/>
+
+            <!-- \"You Might Also Like\" header -->
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.MediaNest.Headline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="You Might Also Like"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/colorDark"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"/>
 
@@ -87,5 +101,24 @@
                 android:paddingEnd="16dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddToLibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Add to Library"
+        app:srcCompat="@drawable/ic_bookmark_add"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_anchor="@id/scrollViewContent"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="16dp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
+
+
+
 

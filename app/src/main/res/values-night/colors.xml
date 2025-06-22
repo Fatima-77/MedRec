@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand colors (night) -->
+    <color name="colorPrimary">#6C3483</color>
+    <color name="colorPrimaryDark">#4A235A</color>
+    <color name="colorAccent">#16A085</color>
+
+    <!-- Neutrals (night) -->
+    <color name="colorDark">#ECECEC</color>
+    <color name="colorLight">#2C3E50</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <!-- Surface in dark -->
+    <color name="colorSurface">#2C3E50</color>
+    <!-- Text on dark background -->
+    <color name="colorOnBackground">#F4F4F4</color>
+</resources>

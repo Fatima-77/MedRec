@@ -40,6 +40,10 @@
     <string name="toggle_password_visibility">Toggle Password Visibility</string>
     <string name="already_have_account">Already have an account? Log In</string>
 
+    <string name="hint_search_by_title">Search by title</string>
+    <string name="button_apply">Apply</string>
+    <string name="desc_filter_icon">Show filters</string>
+
 </resources>
 
 

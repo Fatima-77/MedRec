@@ -7,32 +7,30 @@
     android:fitsSystemWindows="true"
     android:background="@color/colorLight">
 
-    <!-- Top Gradient Banner (with page title) -->
+    <!-- Top Gradient Banner -->
     <LinearLayout
         android:id="@+id/top_banner"
         android:orientation="vertical"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="12dp"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingRight="16dp"
+        android:gravity="center_vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_page_title"
+            style="@style/TextAppearance.MediaNest.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Page Title"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white" />
+            android:text="Page Title" />
     </LinearLayout>
 
-    <!-- Page-specific content gets injected here -->
+    <!-- Injected content -->
     <FrameLayout
         android:id="@+id/base_content_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/transparent"/>
+        android:layout_weight="1" />
 </LinearLayout>

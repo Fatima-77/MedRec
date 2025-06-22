@@ -44,18 +44,22 @@
         android:layout_marginBottom="8dp">
 
         <!-- Search bar -->
-        <EditText
-            android:id="@+id/editSearch"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:hint="Search by title"
-            android:inputType="text"
-            android:background="@drawable/edit_text_background"
-            android:padding="10dp"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="8dp"
-            android:layout_marginBottom="8dp"
-            android:imeOptions="actionDone" />
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editSearch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="text"
+                android:padding="10dp"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="8dp"
+                android:imeOptions="actionDone"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Scrollable genre checkboxes -->
         <ScrollView
@@ -78,13 +82,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnApplyFilters"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Apply"
-            android:backgroundTint="@color/colorDark"
-            android:textColor="@android:color/white"/>
+            app:backgroundTint="?attr/colorAccent"/>
     </LinearLayout>
 
     <!-- RecyclerView for media -->
@@ -95,8 +99,8 @@
         android:layout_weight="1"
         android:padding="8dp"
         android:clipToPadding="false"/>
-
 </LinearLayout>
+
 
 
 

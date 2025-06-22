@@ -19,15 +19,13 @@
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_page_title"
+            style="@style/TextAppearance.MediaNest.Headline"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Home"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"/>
+            android:text="Home"/>
 
         <ImageView
             android:id="@+id/icon_profile"
@@ -48,45 +46,39 @@
     </LinearLayout>
 
     <!-- Typing animation & subheader -->
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_typing_animation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/TextAppearance.MediaNest.Display"
         android:text="Welcome to MediaNest"
-        android:textSize="28sp"
-        android:textColor="@color/colorDark"
-        android:textStyle="bold"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/pacifico"
         app:layout_constraintTop_toBottomOf="@id/main_banner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"/>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_subheader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/TextAppearance.MediaNest.Headline"
         android:text="Find your next favourite story"
-        android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/text_typing_animation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"/>
 
     <!-- Trending heading -->
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_trending_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/TextAppearance.MediaNest.Headline"
         android:text="Trending Anime/Manga"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:textColor="@color/colorDark"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="22dp"
         app:layout_constraintTop_toBottomOf="@id/text_subheader"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="26dp"/>
 
     <!-- Carousel now a horizontal RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -102,32 +94,32 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Buttons -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_browse"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:text="Browse Media"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="40dp"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/viewpager_carousel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"/>
+        android:layout_marginTop="40dp"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_library"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:text="Library"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="16dp"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/btn_browse"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

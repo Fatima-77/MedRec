@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorLight"
     android:fitsSystemWindows="true">
 
-    <!-- Top filter bar: Type spinner + Filter icon -->
+    <!-- Filter bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:spinnerMode="dropdown"/>
+            android:spinnerMode="dropdown" />
 
         <ImageView
             android:id="@+id/iconFilter"
@@ -28,10 +29,10 @@
             android:layout_height="32dp"
             android:src="@drawable/ic_filter_list"
             android:contentDescription="Filter"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp" />
     </LinearLayout>
 
-    <!-- Expandable filter panel -->
+    <!-- Filter panel -->
     <LinearLayout
         android:id="@+id/filterPanel"
         android:orientation="vertical"
@@ -42,21 +43,23 @@
         android:padding="16dp"
         android:layout_marginBottom="8dp">
 
-        <!-- Search -->
-        <EditText
-            android:id="@+id/editSearch"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:hint="Search by title"
-            android:inputType="text"
-            android:background="@drawable/edit_text_background"
-            android:padding="10dp"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="8dp"
-            android:imeOptions="actionDone"
-            android:layout_marginBottom="8dp"/>
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <!-- Scrollable genres -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editSearch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="text"
+                android:padding="10dp"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="8dp"
+                android:imeOptions="actionDone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="180dp"
@@ -67,26 +70,24 @@
                 android:id="@+id/genreCheckboxContainer"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </ScrollView>
 
-        <!-- Sort + Apply -->
         <Spinner
             android:id="@+id/spinnerSort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnApplyFilters"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Apply"
-            android:backgroundTint="@color/colorDark"
-            android:textColor="@android:color/white"/>
+            app:backgroundTint="?attr/colorAccent" />
     </LinearLayout>
 
-    <!-- Pull-to-refresh wrapper around the library list -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
@@ -98,31 +99,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"
-            android:clipToPadding="false"/>
+            android:clipToPadding="false" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <!-- Recommendations carousel header -->
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.MediaNest.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Based on your Library"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorDark"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp" />
 
-    <!-- Recommendations carousel -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRecommendations"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:orientation="horizontal"
         android:clipToPadding="false"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp" />
 </LinearLayout>
 
 

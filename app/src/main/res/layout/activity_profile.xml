@@ -12,40 +12,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Username (read-only) -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MediaNest.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username"
-            android:textStyle="bold"/>
-        <TextView
+            android:text="Username" />
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textUsername"
+            style="@style/TextAppearance.MediaNest.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
-        <!-- Email (read-only) -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MediaNest.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:textStyle="bold"/>
-        <TextView
+            android:text="Email" />
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textEmail"
+            style="@style/TextAppearance.MediaNest.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_background"
             android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <!-- Age Group -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Age Group"
             android:textStyle="bold"/>
+
         <Spinner
             android:id="@+id/spinnerAge"
             android:layout_width="match_parent"
@@ -53,7 +54,7 @@
             android:layout_marginBottom="12dp"/>
 
         <!-- Ethnicity -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ethnicity"
@@ -65,7 +66,7 @@
             android:layout_marginBottom="12dp"/>
 
         <!-- Location -->
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Location"
@@ -85,13 +86,11 @@
             android:layout_marginBottom="20dp"/>
 
         <!-- Save button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveProfile"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="Save Changes"
-            android:backgroundTint="@color/colorDark"
-            android:textColor="@android:color/white"/>
+            android:backgroundTint="@color/colorDark"/>
     </LinearLayout>
 </ScrollView>
-

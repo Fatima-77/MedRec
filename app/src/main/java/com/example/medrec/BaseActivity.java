@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.View;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,52 +17,36 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BaseActivity extends AppCompatActivity {
 
     protected FrameLayout contentFrame;
-    protected BottomNavigationView bottomNavigationView;
+    protected BottomNavigationView bottomNav;
     protected TextView pageTitleText;
-    protected ImageView backButton;
-    protected ImageView bannerBookmark;
+    protected ImageView backButton, bannerBookmark;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
 
-        contentFrame = findViewById(R.id.base_content_frame);
-        bottomNavigationView = findViewById(R.id.base_bottom_nav);
-        pageTitleText = findViewById(R.id.text_page_title);
-        backButton = findViewById(R.id.back_button);
+        contentFrame      = findViewById(R.id.base_content_frame);
+        bottomNav         = findViewById(R.id.base_bottom_nav);
+        pageTitleText     = findViewById(R.id.text_page_title);
+        backButton        = findViewById(R.id.back_button);
+        bannerBookmark    = findViewById(R.id.banner_bookmark);
 
-        // Set up back button: finish activity by default
-        if (backButton != null) {
-            backButton.setOnClickListener(v -> finish());
-        }
+        backButton.setOnClickListener(v -> finish());
+        bannerBookmark.setVisibility(View.GONE);
 
-        bannerBookmark = findViewById(R.id.banner_bookmark);
-        if (bannerBookmark != null) {
-            bannerBookmark.setVisibility(View.GONE); // hidden by default
-        }
-
-        // Apply dynamic status bar padding to the banner
+        // status bar padding
         LinearLayout topBanner = findViewById(R.id.top_banner);
-        if (topBanner != null) {
-            int statusBarHeight = getStatusBarHeight(this);
-            topBanner.setPadding(
-                    topBanner.getPaddingLeft(),
-                    statusBarHeight,
-                    topBanner.getPaddingRight(),
-                    topBanner.getPaddingBottom()
-            );
-        }
+        int statusBarH = getStatusBarHeight(this);
+        topBanner.setPadding(
+                topBanner.getPaddingLeft(),
+                statusBarH,
+                topBanner.getPaddingRight(),
+                topBanner.getPaddingBottom()
+        );
 
-        setupBottomNavigation();
-    }
-
-    // Let child activities control the icon
-    public void showBookmark(boolean show, View.OnClickListener clickListener) {
-        if (bannerBookmark != null) {
-            bannerBookmark.setVisibility(show ? View.VISIBLE : View.GONE);
-            bannerBookmark.setOnClickListener(show ? clickListener : null);
-        }
+        setupBottomNav();
+        highlightCurrentItem();
     }
 
     @Override
@@ -70,59 +54,77 @@ public class BaseActivity extends AppCompatActivity {
         if (contentFrame == null) {
             super.setContentView(layoutResID);
         } else {
-            LayoutInflater.from(this).inflate(layoutResID, contentFrame, true);
+            LayoutInflater.from(this)
+                    .inflate(layoutResID, contentFrame, true);
         }
     }
 
     public void setPageTitle(String title) {
-        if (pageTitleText != null) {
-            pageTitleText.setText(title);
-        }
+        pageTitleText.setText(title);
     }
 
-    private void setupBottomNavigation() {
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+    public void showBookmark(boolean show, View.OnClickListener listener) {
+        bannerBookmark.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (show) bannerBookmark.setOnClickListener(listener);
+    }
+
+    private void setupBottomNav() {
+        bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_library) {
-                if (!(this instanceof LibraryActivity)) {
-                    startActivity(new Intent(this, LibraryActivity.class));
-                    overridePendingTransition(0, 0);
+            Class<?> cls = this.getClass();
+
+            if (id == R.id.nav_home) {
+                if (!cls.equals(MainActivity.class)) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    overridePendingTransition(0,0);
                 }
-                return true;
-            } else if (id == R.id.nav_settings) {
-                if (!(this instanceof SettingsActivity)) {
-                    startActivity(new Intent(this, SettingsActivity.class));
-                    overridePendingTransition(0, 0);
-                }
-                return true;
-            } else if (id == R.id.nav_profile) {
-                if (!(this instanceof ProfileActivity)) {
-                    startActivity(new Intent(this, ProfileActivity.class));
-                    overridePendingTransition(0, 0);
-                }
-                return true;
-            } else if (id == R.id.base_bottom_nav) {
-                if (!(this instanceof BrowseActivity)) {
-                    startActivity(new Intent(this, BrowseActivity.class));
-                    overridePendingTransition(0, 0);
-                }
-                return true;
             }
-            return false;
+            else if (id == R.id.nav_browse) {
+                if (!cls.equals(BrowseActivity.class)) {
+                    startActivity(new Intent(this, BrowseActivity.class));
+                    overridePendingTransition(0,0);
+                }
+            }
+            else if (id == R.id.nav_library) {
+                if (!cls.equals(LibraryActivity.class)) {
+                    startActivity(new Intent(this, LibraryActivity.class));
+                    overridePendingTransition(0,0);
+                }
+            }
+            else if (id == R.id.nav_profile) {
+                if (!cls.equals(ProfileActivity.class)) {
+                    startActivity(new Intent(this, ProfileActivity.class));
+                    overridePendingTransition(0,0);
+                }
+            }
+            else if (id == R.id.nav_settings) {
+                if (!cls.equals(SettingsActivity.class)) {
+                    startActivity(new Intent(this, SettingsActivity.class));
+                    overridePendingTransition(0,0);
+                }
+            }
+            return true;
         });
     }
 
-    // Helper for dynamic status bar height
-    public static int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
+    private void highlightCurrentItem() {
+        int pick = R.id.nav_home;
+        Class<?> cls = this.getClass();
+
+        if (cls.equals(MainActivity.class))       pick = R.id.nav_home;
+        else if (cls.equals(BrowseActivity.class)) pick = R.id.nav_browse;
+        else if (cls.equals(LibraryActivity.class))pick = R.id.nav_library;
+        else if (cls.equals(ProfileActivity.class))pick = R.id.nav_profile;
+        else if (cls.equals(SettingsActivity.class))pick = R.id.nav_settings;
+
+        bottomNav.setSelectedItemId(pick);
+    }
+
+    public static int getStatusBarHeight(Context ctx) {
+        int resId = ctx.getResources().getIdentifier(
+                "status_bar_height","dimen","android");
+        return resId>0
+                ? ctx.getResources().getDimensionPixelSize(resId)
+                : 0;
     }
 }
-
-
-
-

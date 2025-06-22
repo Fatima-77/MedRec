@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <RadioGroup
+            android:id="@+id/radioGroupStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioCompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"/>
+
+            <RadioButton
+                android:id="@+id/radioWatching"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Watching"/>
+
+            <RadioButton
+                android:id="@+id/radioPlanToWatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Plan to Watch"/>
+
+            <RadioButton
+                android:id="@+id/radioDropped"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dropped"/>
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/editUserRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rating (e.g. 8.5)"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="12dp"/>
+
+    </LinearLayout>
+</ScrollView>
