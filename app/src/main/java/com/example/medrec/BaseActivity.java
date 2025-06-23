@@ -19,7 +19,7 @@ public class BaseActivity extends AppCompatActivity {
     protected FrameLayout contentFrame;
     protected BottomNavigationView bottomNav;
     protected TextView pageTitleText;
-    protected ImageView backButton, bannerBookmark;
+    protected ImageView backButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,10 +30,8 @@ public class BaseActivity extends AppCompatActivity {
         bottomNav         = findViewById(R.id.base_bottom_nav);
         pageTitleText     = findViewById(R.id.text_page_title);
         backButton        = findViewById(R.id.back_button);
-        bannerBookmark    = findViewById(R.id.banner_bookmark);
 
         backButton.setOnClickListener(v -> finish());
-        bannerBookmark.setVisibility(View.GONE);
 
         // status bar padding
         LinearLayout topBanner = findViewById(R.id.top_banner);
@@ -61,11 +59,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setPageTitle(String title) {
         pageTitleText.setText(title);
-    }
-
-    public void showBookmark(boolean show, View.OnClickListener listener) {
-        bannerBookmark.setVisibility(show ? View.VISIBLE : View.GONE);
-        if (show) bannerBookmark.setOnClickListener(listener);
     }
 
     private void setupBottomNav() {
@@ -108,14 +101,18 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void highlightCurrentItem() {
-        int pick = R.id.nav_home;
         Class<?> cls = this.getClass();
 
-        if (cls.equals(MainActivity.class))       pick = R.id.nav_home;
+        int pick;
+        if (cls.equals(MainActivity.class))        pick = R.id.nav_home;
         else if (cls.equals(BrowseActivity.class)) pick = R.id.nav_browse;
         else if (cls.equals(LibraryActivity.class))pick = R.id.nav_library;
         else if (cls.equals(ProfileActivity.class))pick = R.id.nav_profile;
         else if (cls.equals(SettingsActivity.class))pick = R.id.nav_settings;
+        else {
+            // RecommendationsActivity (or any other) → do not select anything
+            return;
+        }
 
         bottomNav.setSelectedItemId(pick);
     }

@@ -99,6 +99,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:textColor="@color/colorWhite"
         android:text="Browse Media"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/viewpager_carousel"
@@ -111,9 +112,23 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:textColor="@color/colorWhite"
         android:text="Library"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/btn_browse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_recommendations"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:textColor="@color/colorWhite"
+        android:text="Recommendations"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/btn_library"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"/>

@@ -41,9 +41,6 @@ public class SettingsActivity extends BaseActivity {
                             ? AppCompatDelegate.MODE_NIGHT_YES
                             : AppCompatDelegate.MODE_NIGHT_NO
             );
-
-            // Re-create to apply theme
-            recreate();
         });
 
         // Logout and About buttons

@@ -101,24 +101,6 @@
             android:padding="8dp"
             android:clipToPadding="false" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/TextAppearance.MediaNest.Headline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Based on your Library"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerRecommendations"
-        android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:clipToPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginBottom="16dp" />
 </LinearLayout>
 
 

@@ -59,7 +59,6 @@ public class LibraryActivity extends BaseActivity {
         editSearch              = findViewById(R.id.editSearch);
         btnApplyFilters         = findViewById(R.id.btnApplyFilters);
         recyclerLibrary         = findViewById(R.id.recyclerLibrary);
-        recyclerRecommendations = findViewById(R.id.recyclerRecommendations);
 
         // Setup spinners
         spinnerType.setAdapter(new ArrayAdapter<>(this,
@@ -83,9 +82,6 @@ public class LibraryActivity extends BaseActivity {
             i.putExtra("Media", media);
             startActivity(i);
         });
-        recyclerRecommendations.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerRecommendations.setAdapter(recAdapter);
 
         // Filter panel toggle
         iconFilter.setOnClickListener(v ->
@@ -116,7 +112,6 @@ public class LibraryActivity extends BaseActivity {
 
         // Load user library & genres + recommendations
         fetchUserLibraryAndGenres();
-        fetchRecommendations();
     }
 
     private class SimpleItemListener implements AdapterView.OnItemSelectedListener {
@@ -265,23 +260,6 @@ public class LibraryActivity extends BaseActivity {
                     m.getCategory().contains(ke)) return true;
         }
         return false;
-    }
-
-    private void fetchRecommendations() {
-        DatabaseReference ref = FirebaseDatabase.getInstance()
-                .getReference("Media");
-        ref.orderByChild("rating").limitToLast(6)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override public void onDataChange(@NonNull DataSnapshot snap) {
-                        recommendationList.clear();
-                        for (DataSnapshot s: snap.getChildren()) {
-                            Media m = s.getValue(Media.class);
-                            if (m!=null) recommendationList.add(0,m);
-                        }
-                        recAdapter.notifyDataSetChanged();
-                    }
-                    @Override public void onCancelled(@NonNull DatabaseError e){}
-                });
     }
 }
 

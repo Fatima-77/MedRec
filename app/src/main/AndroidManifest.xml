@@ -41,6 +41,8 @@
 
         <activity android:name=".LibraryActivity"/>
 
+        <activity android:name=".RecommendationsActivity" />
+
     </application>
 
 </manifest>

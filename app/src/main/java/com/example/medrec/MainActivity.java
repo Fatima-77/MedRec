@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         titleTyping = findViewById(R.id.text_typing_animation);
         Button btnBrowse = findViewById(R.id.btn_browse);
         Button btnLibrary = findViewById(R.id.btn_library);
+        Button btnRecommendations = findViewById(R.id.btn_recommendations);
         ImageView iconProfile = findViewById(R.id.icon_profile);
         ImageView iconSettings = findViewById(R.id.icon_settings);
         LinearLayout banner = findViewById(R.id.main_banner);
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 new Intent(this, BrowseActivity.class)));
         btnLibrary.setOnClickListener(v->startActivity(
                 new Intent(this, LibraryActivity.class)));
+        btnRecommendations.setOnClickListener(v -> {Intent i = new Intent(MainActivity.this, RecommendationsActivity.class);startActivity(i);});
         iconProfile.setOnClickListener(v->startActivity(
                 new Intent(this, ProfileActivity.class)));
         iconSettings.setOnClickListener(v->startActivity(
