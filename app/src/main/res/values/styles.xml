@@ -2,8 +2,9 @@
 <resources>
 
     <!-- Display / Hero Text -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
     <style name="TextAppearance.MediaNest.Display" parent="TextAppearance.MaterialComponents.Headline1">
-        <item name="fontFamily">@font/precursive</item>
+        <item name="fontFamily">@font/cursive</item>
         <item name="android:textSize">34sp</item>
         <item name="android:fontWeight">700</item>
         <item name="android:textColor">?attr/colorOnBackground</item>

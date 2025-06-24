@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_background"
-    android:gravity="center">
+    android:paddingTop="120dp">
 
     <ImageView
         android:id="@+id/splashIcon"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@mipmap/ic_launcher"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_below="@id/splashIcon"
+        android:id="@+id/tvSplashTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.MediaNest.Display"
         android:text="MediaNest"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
+        android:textColor="@color/colorWhite"
+        app:layout_constraintTop_toBottomOf="@id/splashIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_below="@id/splashIcon"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvSplashSubtitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.MediaNest.Body"
-        android:text="A place for every hidden favourite."
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
-</RelativeLayout>
+        android:text="A Personalized Media Recommendation Mobile Application"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintTop_toBottomOf="@id/tvSplashTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:gravity="center"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

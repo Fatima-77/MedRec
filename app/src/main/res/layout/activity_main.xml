@@ -22,6 +22,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_page_title"
             style="@style/TextAppearance.MediaNest.Headline"
+            android:textColor="@color/colorWhite"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
